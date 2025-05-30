@@ -1,11 +1,15 @@
-import express from 'express';
-import Product from '#root/models/product.js';
-const router = express.Router();
+import { Router, Response, Request, NextFunction } from 'express';
+import { Product } from '#root/models/product.js';
+const router = Router();
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let page = parseInt(req.query.page) || 1;
-    let limit = parseInt(req.query.limit) || 10;
+    let page = parseInt(
+      typeof req.query.page === 'string' ? req.query.page : '1'
+    );
+    let limit = parseInt(
+      typeof req.query.limit === 'string' ? req.query.limit : '10'
+    );
     let category = req.query.category;
 
     const products = await Product.find({})
@@ -15,7 +19,7 @@ router.get('/', async (req, res, next) => {
 
     const count = await Product.countDocuments();
 
-    return res.status(200).json({
+    res.status(200).json({
       products,
       totalPages: Math.ceil(count / limit),
       currentPage: page,

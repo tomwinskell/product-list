@@ -1,10 +1,11 @@
 import express from 'express';
 import { faker } from '@faker-js/faker';
-import Product from '#root/models/product.js';
+import { Product } from '#root/models/product.js';
 const router = express.Router();
 import productRoutes from '#root/routes/products.js';
 import reviewRoutes from '#root/routes/reviews.js';
 
+//Mounting /products and /reviews routes
 router.use('/products', productRoutes);
 router.use('/reviews', reviewRoutes);
 
@@ -14,12 +15,10 @@ router.get('/generate-fake-data', (req, res, next) => {
 
     product.category = faker.commerce.department();
     product.name = faker.commerce.productName();
-    product.price = faker.commerce.price();
+    product.price = parseFloat(faker.commerce.price());
     product.image = 'https://via.placeholder.com/250?text=Product+Image';
 
-    product.save().then((res, err) => {
-      if (err) throw err;
-    });
+    product.save();
   }
   res.end();
 });

@@ -13,10 +13,12 @@
   "license": "ISC",
   "author": "",
   "type": "module",
-  "main": "app.js",
+  "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "dev": "node --loader ts-node/esm app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js"
   },
   "dependencies": {
     "@faker-js/faker": "^9.8.0",
@@ -26,5 +28,12 @@
   },
   "imports": {
     "#root/*": "./*"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.2",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^22.15.29",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

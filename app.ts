@@ -1,12 +1,9 @@
-import express from 'express';
-import mongoose from 'mongoose';
+import express, { NextFunction, Request, Response } from 'express';
+import { connect } from 'mongoose';
 import bodyParser from 'body-parser';
 import apiRoutes from '#root/routes/index.js';
 
-mongoose.connect('mongodb://localhost/products', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+connect('mongodb://localhost/products');
 
 const app = express();
 
@@ -21,7 +18,7 @@ app.use(
 app.use('/api', apiRoutes);
 
 //Middleware handling errors
-app.use((err, req, res, next) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.message, err.stack);
   res.status(500).json({ error: err.message });
 });
