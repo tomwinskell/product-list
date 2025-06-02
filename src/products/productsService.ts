@@ -6,25 +6,35 @@ import {
   ProductQueryParams,
 } from './productTypes';
 import { convertDocumentToProductDto } from './productHelpers';
-import { ReviewListResponse, ReviewQueryParams } from '../reviews/reviewTypes';
-import { convertDocumentToReviewDto } from '../reviews/reviewHelpers';
-import { Review } from '../reviews/reviewModel';
+import { SortOrder } from 'mongoose';
 
 export class ProductsService {
   public async getAllProducts({
     page,
     limit,
+    category,
+    price,
   }: ProductQueryParams): Promise<ProductListResponse | Error> {
     try {
       const pageAsInt = parseInt(typeof page === 'string' ? page : '1');
       const limitAsInt = parseInt(typeof limit === 'string' ? limit : '10');
+      const findBy = category
+        ? { category: { $regex: category, $options: 'i' } }
+        : {};
 
-      const productDocuments = await Product.find({})
+      const sortBy = (
+        price: 'highest' | 'lowest'
+      ): Record<string, SortOrder> => {
+        if (price === 'highest') return { price: -1, createdAt: -1 };
+        else return { price: 1 as SortOrder, createdAt: -1 };
+      };
+
+      const productDocuments = await Product.find(findBy)
         .skip(limitAsInt * (pageAsInt - 1))
         .limit(limitAsInt)
-        .sort({ createdAt: -1 });
+        .sort(price ? sortBy(price) : { createdAt: -1 });
 
-      const count = await Product.countDocuments();
+      const count = await Product.countDocuments(findBy);
 
       const productsDto = productDocuments.map((product) => {
         return convertDocumentToProductDto(product);
@@ -40,14 +50,11 @@ export class ProductsService {
     }
   }
 
-  public async getProductById(
-    productId: string
-  ): Promise<ProductDto | null | Error> {
+  public async getProductById(productId: string): Promise<ProductDto | Error> {
     try {
       const productDocument = await Product.findById(productId);
-      return productDocument
-        ? convertDocumentToProductDto(productDocument)
-        : null;
+      if (!productDocument) throw new Error();
+      return convertDocumentToProductDto(productDocument);
     } catch (error) {
       throw new Error();
     }
@@ -64,46 +71,11 @@ export class ProductsService {
     }
   }
 
-  public async deleteProduct(
-    productId: string
-  ): Promise<ProductDto | null | Error> {
+  public async deleteProduct(productId: string): Promise<ProductDto | Error> {
     try {
       const productDocument = await Product.findByIdAndDelete(productId);
-      return productDocument
-        ? convertDocumentToProductDto(productDocument)
-        : null;
-    } catch (error) {
-      throw new Error();
-    }
-  }
-
-  public async getProductReviews(
-    productId: string,
-    { page, limit }: ReviewQueryParams
-  ): Promise<ReviewListResponse | Error> {
-    try {
-      const pageAsInt = parseInt(typeof page === 'string' ? page : '1');
-      const limitAsInt = parseInt(typeof limit === 'string' ? limit : '10');
-
-      const productDocument = await Product.findById(productId);
       if (!productDocument) throw new Error();
-
-      const reviewDocuments = await Review.find({ productId })
-        .skip(limitAsInt * (pageAsInt - 1))
-        .limit(limitAsInt)
-        .sort({ createdAt: -1 });
-
-      const count = await Review.countDocuments({ productId });
-
-      const reviewsDto = reviewDocuments.map((review) => {
-        return convertDocumentToReviewDto(review);
-      });
-
-      return {
-        reviews: reviewsDto,
-        totalPages: Math.ceil(count / limitAsInt),
-        currentPage: pageAsInt,
-      };
+      return convertDocumentToProductDto(productDocument);
     } catch (error) {
       throw new Error();
     }

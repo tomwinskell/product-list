@@ -4,6 +4,8 @@
 import type { TsoaRoute } from '@tsoa/runtime';
 import {  fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ReviewsController } from './../src/reviews/reviewsController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ProductsController } from './../src/products/productsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { GenerateController } from './../src/generate/generateController';
@@ -14,6 +16,58 @@ import type { Request as ExRequest, Response as ExResponse, RequestHandler, Rout
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "ReviewDto": {
+        "dataType": "refObject",
+        "properties": {
+            "_id": {"dataType":"string","required":true},
+            "text": {"dataType":"string","required":true},
+            "rating": {"dataType":"double","required":true},
+            "productId": {"dataType":"string","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+            "updatedAt": {"dataType":"datetime","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReviewListResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "reviews": {"dataType":"array","array":{"dataType":"refObject","ref":"ReviewDto"},"required":true},
+            "totalPages": {"dataType":"double","required":true},
+            "currentPage": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Error": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "message": {"dataType":"string","required":true},
+            "stack": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReviewQueryParams": {
+        "dataType": "refObject",
+        "properties": {
+            "page": {"dataType":"string"},
+            "limit": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ReviewCreationParams": {
+        "dataType": "refObject",
+        "properties": {
+            "text": {"dataType":"string","required":true},
+            "rating": {"dataType":"double","required":true},
+            "productId": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ProductDto": {
         "dataType": "refObject",
         "properties": {
@@ -38,21 +92,13 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Error": {
-        "dataType": "refObject",
-        "properties": {
-            "name": {"dataType":"string","required":true},
-            "message": {"dataType":"string","required":true},
-            "stack": {"dataType":"string"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ProductQueryParams": {
         "dataType": "refObject",
         "properties": {
             "page": {"dataType":"string"},
             "limit": {"dataType":"string"},
+            "category": {"dataType":"string"},
+            "price": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["highest"]},{"dataType":"enum","enums":["lowest"]}]},
         },
         "additionalProperties": false,
     },
@@ -64,38 +110,6 @@ const models: TsoaRoute.Models = {
             "category": {"dataType":"string","required":true},
             "price": {"dataType":"double","required":true},
             "image": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ReviewDto": {
-        "dataType": "refObject",
-        "properties": {
-            "_id": {"dataType":"string","required":true},
-            "text": {"dataType":"string","required":true},
-            "rating": {"dataType":"double","required":true},
-            "productId": {"dataType":"string","required":true},
-            "createdAt": {"dataType":"datetime","required":true},
-            "updatedAt": {"dataType":"datetime","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ReviewListResponse": {
-        "dataType": "refObject",
-        "properties": {
-            "reviews": {"dataType":"array","array":{"dataType":"refObject","ref":"ReviewDto"},"required":true},
-            "totalPages": {"dataType":"double","required":true},
-            "currentPage": {"dataType":"double","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ReviewQueryParams": {
-        "dataType": "refObject",
-        "properties": {
-            "page": {"dataType":"string"},
-            "limit": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -117,6 +131,97 @@ export function RegisterRoutes(app: Router) {
 
 
     
+        const argsReviewsController_getProductReviews: Record<string, TsoaRoute.ParameterSchema> = {
+                productId: {"in":"path","name":"productId","required":true,"dataType":"string"},
+                queryParams: {"in":"queries","name":"queryParams","required":true,"ref":"ReviewQueryParams"},
+        };
+        app.get('/reviews/:productId',
+            ...(fetchMiddlewares<RequestHandler>(ReviewsController)),
+            ...(fetchMiddlewares<RequestHandler>(ReviewsController.prototype.getProductReviews)),
+
+            async function ReviewsController_getProductReviews(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsReviewsController_getProductReviews, request, response });
+
+                const controller = new ReviewsController();
+
+              await templateService.apiHandler({
+                methodName: 'getProductReviews',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsReviewsController_postProduct: Record<string, TsoaRoute.ParameterSchema> = {
+                requestBody: {"in":"body","name":"requestBody","required":true,"ref":"ReviewCreationParams"},
+        };
+        app.post('/reviews',
+            ...(fetchMiddlewares<RequestHandler>(ReviewsController)),
+            ...(fetchMiddlewares<RequestHandler>(ReviewsController.prototype.postProduct)),
+
+            async function ReviewsController_postProduct(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsReviewsController_postProduct, request, response });
+
+                const controller = new ReviewsController();
+
+              await templateService.apiHandler({
+                methodName: 'postProduct',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 201,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsReviewsController_deleteProduct: Record<string, TsoaRoute.ParameterSchema> = {
+                reviewId: {"in":"path","name":"reviewId","required":true,"dataType":"string"},
+        };
+        app.delete('/reviews/:reviewId',
+            ...(fetchMiddlewares<RequestHandler>(ReviewsController)),
+            ...(fetchMiddlewares<RequestHandler>(ReviewsController.prototype.deleteProduct)),
+
+            async function ReviewsController_deleteProduct(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsReviewsController_deleteProduct, request, response });
+
+                const controller = new ReviewsController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteProduct',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 204,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsProductsController_getAllProducts: Record<string, TsoaRoute.ParameterSchema> = {
                 queryParams: {"in":"queries","name":"queryParams","required":true,"ref":"ProductQueryParams"},
         };
@@ -231,37 +336,6 @@ export function RegisterRoutes(app: Router) {
                 next,
                 validatedArgs,
                 successStatus: 204,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        const argsProductsController_getProductReviews: Record<string, TsoaRoute.ParameterSchema> = {
-                productId: {"in":"path","name":"productId","required":true,"dataType":"string"},
-                queryParams: {"in":"queries","name":"queryParams","required":true,"ref":"ReviewQueryParams"},
-        };
-        app.get('/products/:productId/reviews',
-            ...(fetchMiddlewares<RequestHandler>(ProductsController)),
-            ...(fetchMiddlewares<RequestHandler>(ProductsController.prototype.getProductReviews)),
-
-            async function ProductsController_getProductReviews(request: ExRequest, response: ExResponse, next: any) {
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args: argsProductsController_getProductReviews, request, response });
-
-                const controller = new ProductsController();
-
-              await templateService.apiHandler({
-                methodName: 'getProductReviews',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
               });
             } catch (err) {
                 return next(err);

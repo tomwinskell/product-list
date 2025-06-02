@@ -17,6 +17,8 @@ export interface ProductListResponse {
 export interface ProductQueryParams {
   page?: string;
   limit?: string;
+  category?: string;
+  price?: 'highest' | 'lowest';
 }
 
 export interface ProductCreationParams {

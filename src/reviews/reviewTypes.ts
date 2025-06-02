@@ -21,4 +21,5 @@ export interface ReviewQueryParams {
 export interface ReviewCreationParams {
   text: string;
   rating: number;
+  productId: string;
 }

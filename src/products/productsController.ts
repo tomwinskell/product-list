@@ -16,7 +16,6 @@ import {
   ProductListResponse,
   ProductQueryParams,
 } from './productTypes';
-import { ReviewListResponse, ReviewQueryParams } from '../reviews/reviewTypes';
 
 @Route('products')
 export class ProductsController extends Controller {
@@ -75,19 +74,5 @@ export class ProductsController extends Controller {
     new ProductsService().deleteProduct(productId);
     return;
     // TODO: TomW return for product not found
-  }
-
-  /**
-   * Retrieves a an array of reviews for a specific product Id.
-   * Optional URL query params page and limit.
-   * If no page or limit given, only first 10 results returned.
-   * @example "http://localhost:3000/6839f26a130912d633d748c5/reviews?page=1&limit=5"
-   */
-  @Get('{productId}/reviews')
-  public async getProductReviews(
-    @Path() productId: string,
-    @Queries() queryParams: ReviewQueryParams
-  ): Promise<ReviewListResponse | Error> {
-    return new ProductsService().getProductReviews(productId, queryParams);
   }
 }
