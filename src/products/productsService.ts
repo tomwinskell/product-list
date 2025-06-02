@@ -8,6 +8,7 @@ import {
 import { convertDocumentToProductDto } from './productHelpers';
 import { ReviewListResponse, ReviewQueryParams } from '../reviews/reviewTypes';
 import { convertDocumentToReviewDto } from '../reviews/reviewHelpers';
+import { Review } from '../reviews/reviewModel';
 
 export class ProductsService {
   public async getAllProducts({
@@ -87,12 +88,12 @@ export class ProductsService {
       const productDocument = await Product.findById(productId);
       if (!productDocument) throw new Error();
 
-      const reviewDocuments = await Product.find({ productId })
+      const reviewDocuments = await Review.find({ productId })
         .skip(limitAsInt * (pageAsInt - 1))
         .limit(limitAsInt)
         .sort({ createdAt: -1 });
 
-      const count = await Product.countDocuments();
+      const count = await Review.countDocuments({ productId });
 
       const reviewsDto = reviewDocuments.map((review) => {
         return convertDocumentToReviewDto(review);

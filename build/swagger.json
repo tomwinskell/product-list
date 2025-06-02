@@ -99,10 +99,6 @@
 						"type": "string"
 					}
 				},
-				"required": [
-					"page",
-					"limit"
-				],
 				"type": "object",
 				"additionalProperties": false
 			},
@@ -200,10 +196,6 @@
 						"type": "string"
 					}
 				},
-				"required": [
-					"page",
-					"limit"
-				],
 				"type": "object",
 				"additionalProperties": false
 			}
@@ -248,7 +240,7 @@
 					{
 						"in": "query",
 						"name": "page",
-						"required": true,
+						"required": false,
 						"schema": {
 							"type": "string"
 						}
@@ -256,7 +248,7 @@
 					{
 						"in": "query",
 						"name": "limit",
-						"required": true,
+						"required": false,
 						"schema": {
 							"type": "string"
 						}
@@ -380,7 +372,7 @@
 					{
 						"in": "query",
 						"name": "page",
-						"required": true,
+						"required": false,
 						"schema": {
 							"type": "string"
 						}
@@ -388,7 +380,7 @@
 					{
 						"in": "query",
 						"name": "limit",
-						"required": true,
+						"required": false,
 						"schema": {
 							"type": "string"
 						}
@@ -400,10 +392,11 @@
 			"get": {
 				"operationId": "GenerateData",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"201": {
+						"description": "Created"
 					}
 				},
+				"description": "Generates products and reviews then saves them to the database.",
 				"security": [],
 				"parameters": []
 			}

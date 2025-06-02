@@ -51,8 +51,8 @@ const models: TsoaRoute.Models = {
     "ProductQueryParams": {
         "dataType": "refObject",
         "properties": {
-            "page": {"dataType":"string","required":true},
-            "limit": {"dataType":"string","required":true},
+            "page": {"dataType":"string"},
+            "limit": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -94,8 +94,8 @@ const models: TsoaRoute.Models = {
     "ReviewQueryParams": {
         "dataType": "refObject",
         "properties": {
-            "page": {"dataType":"string","required":true},
-            "limit": {"dataType":"string","required":true},
+            "page": {"dataType":"string"},
+            "limit": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -290,7 +290,7 @@ export function RegisterRoutes(app: Router) {
                 response,
                 next,
                 validatedArgs,
-                successStatus: undefined,
+                successStatus: 201,
               });
             } catch (err) {
                 return next(err);

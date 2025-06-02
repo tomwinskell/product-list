@@ -15,8 +15,8 @@ export interface ProductListResponse {
 }
 
 export interface ProductQueryParams {
-  page: string;
-  limit: string;
+  page?: string;
+  limit?: string;
 }
 
 export interface ProductCreationParams {

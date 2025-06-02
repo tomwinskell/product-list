@@ -14,8 +14,8 @@ export interface ReviewListResponse {
 }
 
 export interface ReviewQueryParams {
-  page: string;
-  limit: string;
+  page?: string;
+  limit?: string;
 }
 
 export interface ReviewCreationParams {
