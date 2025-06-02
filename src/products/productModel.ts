@@ -4,10 +4,10 @@ const { Schema, model } = mongoose;
 //This is the Product Schema
 const ProductSchema = new Schema(
   {
-    category: String,
-    name: String,
-    price: Number,
-    image: String,
+    category: { type: String, required: true },
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    image: { type: String, required: true },
   },
   { timestamps: true }
 );
