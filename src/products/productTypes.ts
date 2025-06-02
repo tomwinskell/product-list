@@ -1,15 +1,3 @@
-import { Document, ObjectId } from 'mongoose';
-
-export interface ProductEntity extends Document {
-  _id: ObjectId | string;
-  category: string;
-  name: string;
-  price: number;
-  image: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export interface ProductDto {
   _id: string;
   category: string;
@@ -24,4 +12,16 @@ export interface ProductListResponse {
   products: ProductDto[];
   totalPages: number;
   currentPage: number;
+}
+
+export interface ProductQueryParams {
+  page: string;
+  limit: string;
+}
+
+export interface ProductCreationParams {
+  name: string;
+  category: string;
+  price: number;
+  image: string;
 }

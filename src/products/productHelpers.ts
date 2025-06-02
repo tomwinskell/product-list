@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
-import { ProductDto } from './productsTypes';
+import { ProductDto } from './productTypes';
 
 export const convertDocumentToProductDto = (document: Document): ProductDto => {
   const dto = document.toObject();
-  return { ...dto, _id: dto._id.toString() as ProductDto };
+  return { ...dto, _id: dto._id.toString() } as ProductDto;
 };
