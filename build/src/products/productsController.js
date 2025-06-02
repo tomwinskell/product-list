@@ -27,12 +27,21 @@ let ProductsController = class ProductsController extends tsoa_1.Controller {
             return new productsService_1.ProductsService().getAllProducts(queryParams);
         });
     }
+    getByProductId(productId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new productsService_1.ProductsService().getByProductId(productId);
+        });
+    }
 };
 exports.ProductsController = ProductsController;
 __decorate([
     (0, tsoa_1.Get)(),
     __param(0, (0, tsoa_1.Queries)())
 ], ProductsController.prototype, "getAllProducts", null);
+__decorate([
+    (0, tsoa_1.Get)('{productId}'),
+    __param(0, (0, tsoa_1.Path)())
+], ProductsController.prototype, "getByProductId", null);
 exports.ProductsController = ProductsController = __decorate([
     (0, tsoa_1.Route)('products')
 ], ProductsController);

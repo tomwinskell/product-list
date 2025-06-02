@@ -7,8 +7,11 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"Pick_ProductEntity.Exclude_keyofProductEntity._id__": {
+			"ProductDto": {
 				"properties": {
+					"_id": {
+						"type": "string"
+					},
 					"category": {
 						"type": "string"
 					},
@@ -32,51 +35,13 @@
 					}
 				},
 				"required": [
+					"_id",
 					"category",
 					"name",
 					"price",
 					"image",
 					"createdAt",
 					"updatedAt"
-				],
-				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"ProductDto": {
-				"properties": {
-					"category": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"price": {
-						"type": "number",
-						"format": "double"
-					},
-					"image": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"updatedAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"_id": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"category",
-					"name",
-					"price",
-					"image",
-					"createdAt",
-					"updatedAt",
-					"_id"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -189,6 +154,41 @@
 					{
 						"in": "query",
 						"name": "limit",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/products/{productId}": {
+			"get": {
+				"operationId": "GetByProductId",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ProductDto"
+										},
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "productId",
 						"required": true,
 						"schema": {
 							"type": "string"

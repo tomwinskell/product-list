@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsService = void 0;
 const productModel_1 = require("./productModel");
+const productHelpers_1 = require("./productHelpers");
 class ProductsService {
     getAllProducts(_a) {
         return __awaiter(this, arguments, void 0, function* ({ page, limit, }) {
@@ -23,7 +24,7 @@ class ProductsService {
                     .sort({ createdAt: -1 });
                 const count = yield productModel_1.Product.countDocuments();
                 const productsDto = products.map((product) => {
-                    return Object.assign(Object.assign({}, product.toObject()), { _id: product._id.toString() });
+                    return (0, productHelpers_1.convertDocumentToProductDto)(product);
                 });
                 return {
                     products: productsDto,
@@ -32,6 +33,17 @@ class ProductsService {
                 };
             }
             catch (err) {
+                throw new Error();
+            }
+        });
+    }
+    getByProductId(productId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const productsDto = yield productModel_1.Product.find({ _id: productId });
+                return (0, productHelpers_1.convertDocumentToProductDto)(productsDto[0]);
+            }
+            catch (error) {
                 throw new Error();
             }
         });

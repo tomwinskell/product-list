@@ -1,6 +1,7 @@
 import { QueryParams } from './productsController';
 import { Product } from './productModel';
-import { ProductListResponse } from './productsTypes';
+import { ProductDto, ProductListResponse } from './productsTypes';
+import { convertDocumentToProductDto } from './productHelpers';
 
 export class ProductsService {
   public async getAllProducts({
@@ -19,7 +20,7 @@ export class ProductsService {
       const count = await Product.countDocuments();
 
       const productsDto = products.map((product) => {
-        return { ...product.toObject(), _id: product._id.toString() };
+        return convertDocumentToProductDto(product);
       });
 
       return {
@@ -28,6 +29,15 @@ export class ProductsService {
         currentPage: pageAsInt,
       };
     } catch (err) {
+      throw new Error();
+    }
+  }
+
+  public async getByProductId(productId: string): Promise<ProductDto | Error> {
+    try {
+      const productsDto = await Product.find({ _id: productId });
+      return convertDocumentToProductDto(productsDto[0]);
+    } catch (error) {
       throw new Error();
     }
   }

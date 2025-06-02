@@ -8,14 +8,14 @@ export const app = express();
 
 connect('mongodb://localhost/products');
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 app.use(
   urlencoded({
     extended: true,
   })
 );
 app.use(json());
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //Import API routes, mount all under /api
 RegisterRoutes(app);

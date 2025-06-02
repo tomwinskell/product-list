@@ -1,6 +1,6 @@
-import { ObjectId } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
-export interface ProductEntity {
+export interface ProductEntity extends Document {
   _id: ObjectId | string;
   category: string;
   name: string;
@@ -10,8 +10,14 @@ export interface ProductEntity {
   updatedAt: Date;
 }
 
-export interface ProductDto extends Omit<ProductEntity, '_id'> {
+export interface ProductDto {
   _id: string;
+  category: string;
+  name: string;
+  price: number;
+  image: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ProductListResponse {
