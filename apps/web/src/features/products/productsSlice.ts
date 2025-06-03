@@ -1,4 +1,5 @@
 import { createAppSlice } from "../../app/createAppSlice"
+import type { RootState } from "../../app/store"
 import { fetchProducts } from "./fetchProducts"
 import type { ProductsFetchParams, ProductsSliceState } from "./productTypes"
 
@@ -6,6 +7,8 @@ const initialState: ProductsSliceState = {
   products: [],
   totalPages: 0,
   currentPage: 0,
+  category: undefined,
+  price: undefined,
   status: "idle",
 }
 
@@ -13,9 +16,19 @@ export const productsSlice = createAppSlice({
   name: "products",
   initialState,
   reducers: create => ({
+    sortByHighestPrice: create.reducer(state => {
+      state.price = "highest"
+    }),
+    sortByLowestPrice: create.reducer(state => {
+      state.price = "lowest"
+    }),
     fetchProductsAsync: create.asyncThunk(
-      async (params: ProductsFetchParams) => {
-        const response = await fetchProducts(params)
+      async (params: ProductsFetchParams, thunkApi) => {
+        const { products } = thunkApi.getState() as RootState
+
+        const response = await fetchProducts(
+          products.price ? { ...params, price: products.price } : params,
+        )
         return response
       },
       {
@@ -39,10 +52,13 @@ export const productsSlice = createAppSlice({
     selectCurrentPage: products => products.currentPage,
     selectTotalPages: products => products.totalPages,
     selectStatus: products => products.status,
+    selectPrice: products => products.price,
+    selectCategory: products => products.category,
   },
 })
 
-export const { fetchProductsAsync } = productsSlice.actions
+export const { fetchProductsAsync, sortByHighestPrice, sortByLowestPrice } =
+  productsSlice.actions
 
 export const {
   selectProducts,
