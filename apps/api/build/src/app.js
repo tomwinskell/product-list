@@ -42,12 +42,17 @@ const routes_1 = require("../build/routes");
 const mongoose_1 = require("mongoose");
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_json_1 = __importDefault(require("../build/swagger.json"));
+const errorHandlers_1 = require("./errors/errorHandlers");
 exports.app = (0, express_1.default)();
 (0, mongoose_1.connect)('mongodb://localhost/products');
-exports.app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
 exports.app.use((0, express_1.urlencoded)({
     extended: true,
 }));
 exports.app.use((0, express_1.json)());
-//Import API routes, mount all under /api
+exports.app.use('/docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
+// Import API routes, mount all under /api
 (0, routes_1.RegisterRoutes)(exports.app);
+// Handle route not found
+exports.app.use(errorHandlers_1.notFoundHandler);
+// Handle errors
+exports.app.use(errorHandlers_1.errorHandler);

@@ -5,9 +5,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -18,30 +15,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductsController = void 0;
+exports.GenerateController = void 0;
 const tsoa_1 = require("tsoa");
-const productsService_1 = require("./productsService");
-let ProductsController = class ProductsController extends tsoa_1.Controller {
-    getAllProducts(queryParams) {
+const generateService_1 = require("./generateService");
+let GenerateController = class GenerateController extends tsoa_1.Controller {
+    /**
+     * Generates products and reviews then saves them to the database.
+     */
+    generateData() {
         return __awaiter(this, void 0, void 0, function* () {
-            return new productsService_1.ProductsService().getAllProducts(queryParams);
-        });
-    }
-    getByProductId(productId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return new productsService_1.ProductsService().getByProductId(productId);
+            return new generateService_1.GenerateService().generateData();
         });
     }
 };
-exports.ProductsController = ProductsController;
+exports.GenerateController = GenerateController;
 __decorate([
-    (0, tsoa_1.Get)(),
-    __param(0, (0, tsoa_1.Queries)())
-], ProductsController.prototype, "getAllProducts", null);
-__decorate([
-    (0, tsoa_1.Get)('{productId}'),
-    __param(0, (0, tsoa_1.Path)())
-], ProductsController.prototype, "getByProductId", null);
-exports.ProductsController = ProductsController = __decorate([
-    (0, tsoa_1.Route)('products')
-], ProductsController);
+    (0, tsoa_1.SuccessResponse)('201', 'Created'),
+    (0, tsoa_1.Get)()
+], GenerateController.prototype, "generateData", null);
+exports.GenerateController = GenerateController = __decorate([
+    (0, tsoa_1.Route)('generate')
+], GenerateController);

@@ -1,44 +1,14 @@
 {
-  "name": "clear",
-  "version": "1.0.0",
-  "description": "This project has been created by a student at Parsity, an online software engineering course. The work in this repository is wholly of the student based on a sample starter project that can be accessed by looking at the repository that this project forks.",
-  "homepage": "https://github.com/tomwinskell/product-list#readme",
-  "bugs": {
-    "url": "https://github.com/tomwinskell/product-list/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tomwinskell/product-list.git"
-  },
-  "license": "ISC",
-  "author": "",
-  "main": "build/src/server.js",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",
-    "build": "tsoa spec-and-routes && tsc --outDir build --experimentalDecorators",
-    "start": "node build/src/server.js"
-  },
-  "dependencies": {
-    "@faker-js/faker": "^9.8.0",
-    "body-parser": "^2.2.0",
-    "express": "^5.1.0",
-    "mongoose": "^8.15.1",
-    "swagger-ui-express": "^5.0.1",
-    "tsoa": "^6.6.0",
-    "zod": "^3.25.46"
-  },
-  "imports": {
-    "#root/*": "./*"
+    "dev:api": "yarn workspace api dev",
+    "dev:web": "yarn workspace web dev",
+    "dev": "concurrently \"yarn dev:api\" \"yarn dev:web\""
   },
   "devDependencies": {
-    "@types/express": "^5.0.2",
-    "@types/mongoose": "^5.11.96",
-    "@types/node": "^22.15.29",
-    "@types/swagger-ui-express": "^4.1.8",
-    "concurrently": "^9.1.2",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "concurrently": "^9.1.2"
   }
 }
