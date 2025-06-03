@@ -9,7 +9,7 @@ export const Products = (): ReactNode => {
   const { products, status } = useAppSelector(state => state.products)
 
   useEffect(() => {
-    if (status === "idle") void dispatch(fetchProductsAsync({ page: "2" }))
+    if (status === "idle") void dispatch(fetchProductsAsync({}))
   }, [dispatch, status])
 
   if (status === "loading") return <p>Loading products...</p>
