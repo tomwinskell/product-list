@@ -8,9 +8,15 @@ import {
   Queries,
   Route,
   SuccessResponse,
+  Response,
 } from 'tsoa';
-import { ReviewCreationParams, ReviewListResponse, ReviewQueryParams } from './reviewTypes';
+import {
+  ReviewCreationParams,
+  ReviewListResponse,
+  ReviewQueryParams,
+} from './reviewTypes';
 import { ReviewsService } from './reviewsService';
+import { ValidateErrorJSON } from '../errors/errorTypes';
 
 @Route('reviews')
 export class ReviewsController extends Controller {
@@ -36,6 +42,7 @@ export class ReviewsController extends Controller {
    * "productId": "",
    * }
    */
+  @Response<ValidateErrorJSON>(422, 'Validation Failed')
   @SuccessResponse('201', 'Created')
   @Post()
   public async postProduct(
@@ -56,6 +63,5 @@ export class ReviewsController extends Controller {
     this.setStatus(204);
     new ReviewsService().deleteReview(reviewId);
     return;
-    // TODO: TomW return for product not found
   }
 }

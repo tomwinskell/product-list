@@ -8,6 +8,7 @@ import {
   Queries,
   Route,
   SuccessResponse,
+  Response,
 } from 'tsoa';
 import { ProductsService } from './productsService';
 import {
@@ -16,6 +17,7 @@ import {
   ProductListResponse,
   ProductQueryParams,
 } from './productTypes';
+import { ValidateErrorJSON } from '../errors/errorTypes';
 
 @Route('products')
 export class ProductsController extends Controller {
@@ -39,9 +41,8 @@ export class ProductsController extends Controller {
   @Get('{productId}')
   public async getProductById(
     @Path() productId: string
-  ): Promise<ProductDto | null | Error> {
+  ): Promise<ProductDto | Error> {
     return new ProductsService().getProductById(productId);
-    // TODO: TomW return for product not found
   }
 
   /**
@@ -53,6 +54,7 @@ export class ProductsController extends Controller {
    * "image": "https://via.placeholder.com/250?text=Product+Image"
    * }
    */
+  @Response<ValidateErrorJSON>(422, 'Validation Failed')
   @SuccessResponse('201', 'Created')
   @Post()
   public async postProduct(

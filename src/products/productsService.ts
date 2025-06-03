@@ -10,6 +10,7 @@ import {
   returnFindOptions,
   returnSortOptions,
 } from './productHelpers';
+import { MongooseError } from 'mongoose';
 
 export class ProductsService {
   public async getAllProducts({
@@ -43,18 +44,26 @@ export class ProductsService {
         totalPages: Math.ceil(count / limitAsInt),
         currentPage: pageAsInt,
       };
-    } catch (err) {
-      throw new Error();
+    } catch (error) {
+      if (error instanceof MongooseError) {
+        throw new Error(`[getAllProducts] ${error.message}`);
+      }
+      throw new Error('[getAllProducts] unknown error');
     }
   }
 
   public async getProductById(productId: string): Promise<ProductDto | Error> {
     try {
       const productDocument = await Product.findById(productId);
-      if (!productDocument) throw new Error();
+      if (!productDocument)
+        throw new Error('[getProductById] product not found');
       return convertDocumentToProductDto(productDocument);
     } catch (error) {
-      throw new Error();
+      if (error instanceof MongooseError) {
+        throw new Error(`[getProductById] ${error.message}`);
+      }
+      if (typeof error === 'string') throw new Error(error);
+      throw new Error('[getProductById] unknown error');
     }
   }
 
@@ -63,19 +72,30 @@ export class ProductsService {
   ): Promise<ProductDto | Error> {
     try {
       const productDocument = await Product.create(productToCreate);
+      if (!productDocument)
+        throw new Error('[createProduct] create product failed');
       return convertDocumentToProductDto(productDocument);
     } catch (error) {
-      throw new Error();
+      if (error instanceof MongooseError) {
+        throw new Error(`[createProduct] ${error.message}`);
+      }
+      if (typeof error === 'string') throw new Error(error);
+      throw new Error('[createProduct] unknown error');
     }
   }
 
   public async deleteProduct(productId: string): Promise<ProductDto | Error> {
     try {
       const productDocument = await Product.findByIdAndDelete(productId);
-      if (!productDocument) throw new Error();
+      if (!productDocument)
+        throw new Error('[deleteProduct] delete product failed');
       return convertDocumentToProductDto(productDocument);
     } catch (error) {
-      throw new Error();
+      if (error instanceof MongooseError) {
+        throw new Error(`[deleteProduct] ${error.message}`);
+      }
+      if (typeof error === 'string') throw new Error(error);
+      throw new Error('[deleteProduct] unknown error');
     }
   }
 }

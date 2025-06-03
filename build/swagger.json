@@ -98,6 +98,28 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ValidateErrorJSON": {
+				"properties": {
+					"message": {
+						"type": "string",
+						"enum": [
+							"Validation failed"
+						],
+						"nullable": false
+					},
+					"details": {
+						"properties": {},
+						"additionalProperties": {},
+						"type": "object"
+					}
+				},
+				"required": [
+					"message",
+					"details"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ReviewCreationParams": {
 				"properties": {
 					"text": {
@@ -304,6 +326,16 @@
 				"responses": {
 					"201": {
 						"description": "Created"
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidateErrorJSON"
+								}
+							}
+						}
 					}
 				},
 				"description": "Creates a review. Pass review information using request body.",
@@ -420,6 +452,16 @@
 				"responses": {
 					"201": {
 						"description": "Created"
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidateErrorJSON"
+								}
+							}
+						}
 					}
 				},
 				"description": "Creates a product. Pass product information using request body.",
@@ -453,8 +495,7 @@
 										{
 											"$ref": "#/components/schemas/Error"
 										}
-									],
-									"nullable": true
+									]
 								}
 							}
 						}
