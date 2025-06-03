@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { InferSchemaType } from 'mongoose';
 const { Schema, model } = mongoose;
 
 //This is the Product Schema
@@ -11,5 +11,7 @@ const ProductSchema = new Schema(
   },
   { timestamps: true }
 );
+
+export type ProductType = InferSchemaType<typeof ProductSchema>;
 
 export const Product = model('Product', ProductSchema);

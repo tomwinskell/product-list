@@ -99,6 +99,7 @@ const models: TsoaRoute.Models = {
             "limit": {"dataType":"string"},
             "category": {"dataType":"string"},
             "price": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["highest"]},{"dataType":"enum","enums":["lowest"]}]},
+            "query": {"dataType":"string"},
         },
         "additionalProperties": false,
     },

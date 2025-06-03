@@ -5,8 +5,11 @@ import {
   ProductListResponse,
   ProductQueryParams,
 } from './productTypes';
-import { convertDocumentToProductDto } from './productHelpers';
-import { SortOrder } from 'mongoose';
+import {
+  convertDocumentToProductDto,
+  returnFindOptions,
+  returnSortOptions,
+} from './productHelpers';
 
 export class ProductsService {
   public async getAllProducts({
@@ -14,27 +17,22 @@ export class ProductsService {
     limit,
     category,
     price,
+    query,
   }: ProductQueryParams): Promise<ProductListResponse | Error> {
     try {
       const pageAsInt = parseInt(typeof page === 'string' ? page : '1');
       const limitAsInt = parseInt(typeof limit === 'string' ? limit : '10');
-      const findBy = category
-        ? { category: { $regex: category, $options: 'i' } }
-        : {};
 
-      const sortBy = (
-        price: 'highest' | 'lowest'
-      ): Record<string, SortOrder> => {
-        if (price === 'highest') return { price: -1, createdAt: -1 };
-        else return { price: 1 as SortOrder, createdAt: -1 };
-      };
-
-      const productDocuments = await Product.find(findBy)
+      const productDocuments = await Product.find(
+        returnFindOptions(category, query)
+      )
         .skip(limitAsInt * (pageAsInt - 1))
         .limit(limitAsInt)
-        .sort(price ? sortBy(price) : { createdAt: -1 });
+        .sort(returnSortOptions(price));
 
-      const count = await Product.countDocuments(findBy);
+      const count = await Product.countDocuments(
+        returnFindOptions(category, query)
+      );
 
       const productsDto = productDocuments.map((product) => {
         return convertDocumentToProductDto(product);

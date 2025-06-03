@@ -200,6 +200,9 @@
 							"highest",
 							"lowest"
 						]
+					},
+					"query": {
+						"type": "string"
 					}
 				},
 				"type": "object",
@@ -400,6 +403,14 @@
 								"highest",
 								"lowest"
 							]
+						}
+					},
+					{
+						"in": "query",
+						"name": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
 						}
 					}
 				]
