@@ -5,7 +5,7 @@ export const buildProduct = () => {
     category: faker.commerce.department(),
     name: faker.commerce.productName(),
     price: faker.commerce.price(),
-    image: 'https://via.placeholder.com/250?text=Product+Image',
+    image: faker.image.urlPicsumPhotos({ width: 320, height: 320 }),
   };
 };
 
