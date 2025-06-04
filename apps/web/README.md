@@ -1,27 +1,85 @@
-# vite-template-redux
+# Product List Web App
 
-Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)
+A modern React web application for browsing and managing products, built with Vite, Redux Toolkit, and Tailwind CSS.
 
-```sh
-npx tiged reduxjs/redux-templates/packages/vite-template-redux my-app
+## Features
+
+- **Product Browsing**: View products with pagination support
+- **Search Functionality**: Search products with debounced input
+- **Category Filtering**: Filter products by category using dropdown
+- **Sorting**: Sort products by various criteria
+- **Dark Mode**: Toggle between light and dark themes
+- **Responsive Design**: Optimized for mobile, tablet, and desktop
+
+## Tech Stack
+
+- **React 19** - UI framework
+- **Redux Toolkit** - State management
+- **Vite** - Build tool and dev server
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Flowbite React** - UI components
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-## Goals
+## Available Scripts
 
-- Easy migration from Create React App or Vite
-- As beginner friendly as Create React App
-- Optimized performance compared to Create React App
-- Customizable without ejecting
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run format` - Format code with Prettier
+- `npm run type-check` - Run TypeScript type checking
 
-## Scripts
+## Project Structure
 
-- `dev`/`start` - start dev server and open browser
-- `build` - build for production
-- `preview` - locally preview production build
-- `test` - launch test runner
+```
+src/
+├── app/           # Redux store configuration
+├── components/    # Reusable UI components
+│   └── navbar/    # Navigation components
+├── features/      # Feature-based modules
+│   └── products/  # Product-related components and logic
+└── main.tsx       # Application entry point
+```
 
-## Inspiration
+## Features Overview
 
-- [Create React App](https://github.com/facebook/create-react-app/tree/main/packages/cra-template)
-- [Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react)
-- [Vitest](https://github.com/vitest-dev/vitest/tree/main/examples/react-testing-lib)
+### Products
+- View paginated product listings
+- Search products with real-time filtering
+- Filter by categories
+- Sort by different criteria (price, name, etc.)
+
+### UI/UX
+- Responsive design for all screen sizes
+- Dark/light mode toggle
+- Clean, modern interface with Tailwind CSS
+- Accessible components with Flowbite React
+
+## Development
+
+The app uses absolute imports configured in `vite.config.ts`:
+- `@app` - App configuration and store
+- `@features` - Feature modules
+- `@components` - Reusable components
+
+## API Integration
+
+This web app connects to a backend API for product data. Ensure the API server is running for full functionality.
