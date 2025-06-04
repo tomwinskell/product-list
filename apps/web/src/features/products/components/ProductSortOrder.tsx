@@ -1,10 +1,10 @@
 import { Button, ButtonGroup } from "flowbite-react"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import {
   fetchProductsAsync,
   sortByHighestPrice,
   sortByLowestPrice,
-} from "./productsSlice"
+} from "../productsSlice"
 
 export function ProductSortOrder() {
   const dispatch = useAppDispatch()

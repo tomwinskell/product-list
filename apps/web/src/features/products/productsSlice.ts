@@ -1,3 +1,4 @@
+import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
 import type { RootState } from "../../app/store"
 import { fetchProducts } from "./fetchProducts"
@@ -22,13 +23,21 @@ export const productsSlice = createAppSlice({
     sortByLowestPrice: create.reducer(state => {
       state.price = "lowest"
     }),
+    filterByCategory: create.reducer((state, action: PayloadAction<string>) => {
+      state.category = action.payload
+    }),
+    resetCategory: create.reducer(state => {
+      state.category = undefined
+    }),
     fetchProductsAsync: create.asyncThunk(
       async (params: ProductsFetchParams, thunkApi) => {
         const { products } = thunkApi.getState() as RootState
 
-        const response = await fetchProducts(
-          products.price ? { ...params, price: products.price } : params,
-        )
+        const response = await fetchProducts({
+          ...params,
+          price: products.price,
+          category: products.category,
+        })
         return response
       },
       {
@@ -57,8 +66,13 @@ export const productsSlice = createAppSlice({
   },
 })
 
-export const { fetchProductsAsync, sortByHighestPrice, sortByLowestPrice } =
-  productsSlice.actions
+export const {
+  fetchProductsAsync,
+  sortByHighestPrice,
+  sortByLowestPrice,
+  filterByCategory,
+  resetCategory,
+} = productsSlice.actions
 
 export const {
   selectProducts,
