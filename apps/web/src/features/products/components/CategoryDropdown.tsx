@@ -1,4 +1,4 @@
-import { Badge, Dropdown, DropdownItem } from "flowbite-react"
+import { Badge, Dropdown, DropdownItem, Tooltip } from "flowbite-react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import {
   fetchProductsAsync,
@@ -31,17 +31,20 @@ export const CategoryDropdown = () => {
         )}
       </Dropdown>
       {categoryInState && (
-        <Badge color="purple">
-          <span
-            className="me-1 hover:text-white cursor-pointer"
-            onClick={() => {
-              dispatch(resetCategory())
-              void dispatch(fetchProductsAsync({}))
-            }}
-          >
-            X
-          </span>
-          {categoryInState}
+        <Badge color="purple" className="hover:text-white cursor-pointer">
+          <Tooltip content="Clear category">
+            <span
+              className="me-1"
+              onClick={() => {
+                dispatch(resetCategory())
+                void dispatch(fetchProductsAsync({}))
+              }}
+            >
+              X
+            </span>
+
+            {categoryInState}
+          </Tooltip>
         </Badge>
       )}
     </div>

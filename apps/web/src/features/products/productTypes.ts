@@ -26,6 +26,7 @@ export type ProductsSliceState = {
   products: ProductDto[]
   totalPages: number
   currentPage: number
+  query: string | undefined
   category: string | undefined
   price: "highest" | "lowest" | undefined
   status: "idle" | "loading" | "failed" | "succeeded"

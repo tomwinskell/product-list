@@ -8,6 +8,7 @@ const initialState: ProductsSliceState = {
   products: [],
   totalPages: 0,
   currentPage: 0,
+  query: undefined,
   category: undefined,
   price: undefined,
   status: "idle",
@@ -17,6 +18,12 @@ export const productsSlice = createAppSlice({
   name: "products",
   initialState,
   reducers: create => ({
+    setQuery: create.reducer((state, action: PayloadAction<string>) => {
+      state.query = action.payload
+    }),
+    resetQuery: create.reducer(state => {
+      state.query = undefined
+    }),
     sortByHighestPrice: create.reducer(state => {
       state.price = "highest"
     }),
@@ -35,6 +42,7 @@ export const productsSlice = createAppSlice({
 
         const response = await fetchProducts({
           ...params,
+          query: products.query,
           price: products.price,
           category: products.category,
         })
@@ -72,6 +80,8 @@ export const {
   sortByLowestPrice,
   filterByCategory,
   resetCategory,
+  setQuery,
+  resetQuery,
 } = productsSlice.actions
 
 export const {
