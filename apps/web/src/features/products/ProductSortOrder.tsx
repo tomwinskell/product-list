@@ -12,28 +12,30 @@ export function ProductSortOrder() {
   const { price } = useAppSelector(state => state.products)
 
   return (
-    <ButtonGroup>
-      Sort By Price
-      <Button
-        color="alternative"
-        disabled={price === "highest"}
-        onClick={() => {
-          dispatch(sortByHighestPrice())
-          void dispatch(fetchProductsAsync({}))
-        }}
-      >
-        Highest
-      </Button>
-      <Button
-        color="alternative"
-        disabled={price === "lowest"}
-        onClick={() => {
-          dispatch(sortByLowestPrice())
-          void dispatch(fetchProductsAsync({}))
-        }}
-      >
-        Lowest
-      </Button>
-    </ButtonGroup>
+    <div className="self-end">
+      <span className="dark:text-white text-gray-950">Sort By Price</span>
+      <ButtonGroup className="ms-3">
+        <Button
+          color="alternative"
+          disabled={price === "highest"}
+          onClick={() => {
+            dispatch(sortByHighestPrice())
+            void dispatch(fetchProductsAsync({}))
+          }}
+        >
+          Highest
+        </Button>
+        <Button
+          color="alternative"
+          disabled={price === "lowest"}
+          onClick={() => {
+            dispatch(sortByLowestPrice())
+            void dispatch(fetchProductsAsync({}))
+          }}
+        >
+          Lowest
+        </Button>
+      </ButtonGroup>
+    </div>
   )
 }

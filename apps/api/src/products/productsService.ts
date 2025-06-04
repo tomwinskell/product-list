@@ -22,7 +22,7 @@ export class ProductsService {
   }: ProductQueryParams): Promise<ProductListResponse | Error> {
     try {
       const pageAsInt = parseInt(typeof page === 'string' ? page : '1');
-      const limitAsInt = parseInt(typeof limit === 'string' ? limit : '10');
+      const limitAsInt = parseInt(typeof limit === 'string' ? limit : '9');
 
       const productDocuments = await Product.find(
         returnFindOptions(category, query)
