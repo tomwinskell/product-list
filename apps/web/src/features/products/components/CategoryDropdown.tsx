@@ -6,7 +6,18 @@ import {
   resetCategory,
 } from "../productsSlice"
 
-const categories = ["Tools", "Garden"]
+const categories = [
+  "Tools",
+  "Garden",
+  "Sports",
+  "Baby",
+  "Music",
+  "Toys",
+  "Jewelry",
+  "Beauty",
+  "Clothing",
+  "Games",
+]
 
 export const CategoryDropdown = () => {
   const dispatch = useAppDispatch()
