@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
-import { SearchInput } from "./components/SearchInput"
-import { NavbarLogo } from "./components/NavbarLogo"
+import { SearchInput } from "@components/navbar/components"
+import { NavbarLogo } from "@components/navbar/components"
 import { DarkThemeToggle } from "flowbite-react"
 
 export const Navbar = (): ReactNode => {

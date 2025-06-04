@@ -1,6 +1,6 @@
 import { Pagination } from "flowbite-react"
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { fetchProductsAsync } from "../productsSlice"
+import { useAppDispatch, useAppSelector } from "@app/hooks"
+import { fetchProductsAsync } from "@features/products/productsSlice"
 
 export const ProductPagination = () => {
   const dispatch = useAppDispatch()

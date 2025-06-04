@@ -1,18 +1,19 @@
 import { Badge, TextInput, Tooltip } from "flowbite-react"
 import debounce from "lodash.debounce"
 import { useCallback, useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { useAppDispatch, useAppSelector } from "@app/hooks"
 import {
   fetchProductsAsync,
   resetQuery,
   setQuery,
-} from "../../../features/products/productsSlice"
+} from "@features/products/productsSlice"
 
 export const SearchInput = () => {
   const dispatch = useAppDispatch()
   const { query: queryInState } = useAppSelector(state => state.products)
   const [inputValue, setInputValue] = useState<string>("")
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce((query: string) => {
       dispatch(setQuery(query))

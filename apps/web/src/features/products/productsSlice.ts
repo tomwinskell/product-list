@@ -1,8 +1,8 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { createAppSlice } from "../../app/createAppSlice"
-import type { RootState } from "../../app/store"
-import { fetchProducts } from "./fetchProducts"
-import type { ProductsFetchParams, ProductsSliceState } from "./productTypes"
+import { createAppSlice } from "@app/createAppSlice"
+import type { RootState } from "@app/store"
+import { fetchProducts } from "@features/products"
+import type { ProductsFetchParams, ProductsSliceState } from "@features/products"
 
 const initialState: ProductsSliceState = {
   products: [],

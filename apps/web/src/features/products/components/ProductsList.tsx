@@ -1,7 +1,7 @@
 import { type ReactNode, useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { fetchProductsAsync } from "../productsSlice"
-import { ProductCard } from "./ProductCard"
+import { useAppDispatch, useAppSelector } from "@app/hooks"
+import { fetchProductsAsync } from "@features/products/productsSlice"
+import { ProductCard } from "@features/products/components"
 
 export const ProductsList = (): ReactNode => {
   const dispatch = useAppDispatch()

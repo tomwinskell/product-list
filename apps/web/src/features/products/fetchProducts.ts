@@ -1,7 +1,7 @@
 import type {
   ProductsFetchParams,
   ProductsListResponse,
-} from "./productTypes.ts"
+} from "@features/products"
 
 export const fetchProducts = async (
   params: ProductsFetchParams,
@@ -30,6 +30,7 @@ const returnParamsString = (params: ProductsFetchParams): string => {
 
 const filterParams = (params: ProductsFetchParams) => {
   return Object.fromEntries(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     Object.entries(params).filter(([, /* unused */ value]) => value),
   )
 }

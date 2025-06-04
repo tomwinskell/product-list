@@ -1,5 +1,5 @@
 import { Card } from "flowbite-react"
-import type { ProductDto } from "./productTypes"
+import type { ProductDto } from "@features/products/productTypes"
 export const ProductCard = ({ name, price, image }: ProductDto) => {
   return (
     <Card

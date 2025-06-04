@@ -1,5 +1,5 @@
 import { Badge, Dropdown, DropdownItem, Tooltip } from "flowbite-react"
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { useAppDispatch, useAppSelector } from "@app/hooks"
 import {
   fetchProductsAsync,
   filterByCategory,

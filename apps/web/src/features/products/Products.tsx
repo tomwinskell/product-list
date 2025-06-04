@@ -1,6 +1,9 @@
-import { CategoryDropdown, ProductPagination } from "./components"
-import { ProductSortOrder } from "./components"
-import { ProductsList } from "./components"
+import {
+  CategoryDropdown,
+  ProductPagination,
+} from "@features/products/components"
+import { ProductSortOrder } from "@features/products/components"
+import { ProductsList } from "@features/products/components"
 
 export const Products = () => {
   return (
