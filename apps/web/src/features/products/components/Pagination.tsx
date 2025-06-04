@@ -8,7 +8,7 @@ export const ProductPagination = () => {
   const { currentPage, totalPages } = useAppSelector(state => state.products)
 
   return (
-    <div className="flex overflow-x-auto sm:justify-center">
+    <div className="flex overflow-x-auto justify-center">
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

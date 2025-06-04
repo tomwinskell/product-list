@@ -12,7 +12,7 @@ export function ProductSortOrder() {
   const { price } = useAppSelector(state => state.products)
 
   return (
-    <div className="self-end">
+    <div className="self-center md:self-end">
       <span className="dark:text-white text-gray-950">Sort By Price</span>
       <ButtonGroup className="ms-3">
         <Button

@@ -4,8 +4,8 @@ import { ProductsList } from "./components"
 
 export const Products = () => {
   return (
-    <div className="flex flex-col p-5 w-sm md:w-auto md:max-w-2xl lg:max-w-5xl">
-      <div className="flex flex-row justify-between">
+    <div className="flex flex-col p-5 w-sm md:w-2xl lg:w-5xl">
+      <div className="flex flex-col md:flex-row items-center gap-y-2 md:justify-between">
         <CategoryDropdown />
         <ProductSortOrder />
       </div>
