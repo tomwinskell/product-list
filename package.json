@@ -4,6 +4,8 @@
     "apps/*"
   ],
   "scripts": {
+    "docker:build:web": "docker build -f apps/web/Dockerfile -t my-vite-app .",
+    "docker:run:web": "docker run -p 8080:80 my-vite-app",
     "dev:api": "yarn workspace api dev",
     "dev:web": "yarn workspace web dev",
     "dev": "concurrently \"yarn dev:api\" \"yarn dev:web\""

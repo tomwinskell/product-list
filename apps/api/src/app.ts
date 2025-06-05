@@ -4,10 +4,17 @@ import { connect } from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../build/swagger.json';
 import { errorHandler, notFoundHandler } from './errors/errorHandlers';
+import { configDotenv } from 'dotenv';
+
+configDotenv();
 
 export const app = express();
 
-connect('mongodb://localhost/products');
+if (!process.env.MONGODB) {
+  console.warn('[app.ts] MONGODB not defined');
+  process.exit(1);
+}
+connect(process.env.MONGODB);
 
 // CORS
 app.use((_, res, next) => {
