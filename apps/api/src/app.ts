@@ -10,11 +10,16 @@ configDotenv();
 
 export const app = express();
 
-if (!process.env.MONGODB) {
-  console.warn('[app.ts] MONGODB not defined');
+const mongoConnectionString =
+  process.env.MONGO_URI ||
+  process.env.MONGODB ||
+  'mongodb://localhost/products';
+
+const mongoDb = connect(mongoConnectionString);
+if (!mongoDb) {
+  console.warn('[app.ts] MONGODB connection error');
   process.exit(1);
 }
-connect(process.env.MONGODB);
 
 // CORS
 app.use((_, res, next) => {

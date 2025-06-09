@@ -14,34 +14,31 @@ apps/
 
 ### Prerequisites
 
-- Node.js (v18+)
-- MongoDB (running locally)
-- Yarn
+- [Docker Desktop](https://docs.docker.com/get-started/get-docker/)
 
-### Setup
+### Docker Setup
 
 ```bash
-# Install all dependencies
-yarn install
+# Build and start all services
+yarn docker:build
 
-# Start both applications
-yarn dev
+# Generate seed data (run after build)
+curl http://localhost:3000/generate
 ```
 
-This will start:
-
-- Web app: http://localhost:5173
-- API server: http://localhost:3000
+**Access points:**
+- Web app: http://localhost:8080
 - API docs: http://localhost:3000/docs
 
-### Individual Apps
+### Development
 
 ```bash
-# Start only the web app
-yarn dev:web
+# Individual services
+yarn docker:web:build && yarn docker:web    # Web only
+yarn docker:api:build && yarn docker:api    # API only
 
-# Start only the API
-yarn dev:api
+# Local development (requires MongoDB)
+yarn dev
 ```
 
 ## Tech Stack
